@@ -1,4 +1,5 @@
 Attribute VB_Name = "Module3"
+' https://github.com/satoushina/ifc2excelGrid
 ' based on IFCsvrR300 sample7
 
 ' -----------------------------------------------------------------
@@ -70,12 +71,12 @@ Public Function procPsetViewerGrid()
     
     
     
-' ‘®«–¼‚Ì—ñ‹“
+' å±æ€§åã®åˆ—æŒ™
   Dim i As Integer
   Dim j As Integer
     i = 0
     j = 1
-  ' IfcSpace‚ÌŒJ‚è•Ô‚µ@1‰ñ‚¾‚¯
+  ' IfcSpaceã®ç¹°ã‚Šè¿”ã—ã€€1å›ã ã‘
   For Each objEntity In objDesign.FindObjects(strClassName)
     If i > 0 Then
         Exit For
@@ -85,29 +86,29 @@ Public Function procPsetViewerGrid()
     'r1.Offset(0, 1).Value = "{" & objEntity.GUID & "}"
     'Set r1 = r1.Offset(1, 0)
     
-    ' Pset‚ÌŒJ‚è•Ô‚µ
+    ' Psetã®ç¹°ã‚Šè¿”ã—
     For Each objRelAssignsProperties In _
           objEntity.GetUsedIn(STR_ENT_REL_ASSIGNS_PROPERTIES_2X, STR_ATT_RELATED_OBJECTS_2X)
       Set objPropertySet = objRelAssignsProperties.Attributes(STR_ATT_RELATING_PROPERTY_2X).Value
       If Not objPropertySet Is Nothing Then
-        ' Pset‚ª‹ó‚Å‚È‚¢‚Æ‚«
+        ' PsetãŒç©ºã§ãªã„ã¨ã
         If objPropertySet.Type Like STR_ENT_PROPERTY_SET_2X Then
         j = j + 1
-          ' Pset‚ªIfcPropertySet‚Ì‚Æ‚«
+          ' PsetãŒIfcPropertySetã®ã¨ã
           strPropertySetName = objPropertySet.Attributes("Name").Value
           'r1.Offset(0, 1).Value = "PropertySet Name:"
           r1.Offset(0, j).Value = strPropertySetName
           'Set r1 = r1.Offset(1, 0)
 
           For Each objProperty In objPropertySet.Attributes("HasProperties").Value
-            ' Pset“à‚ÌHasProperties‚É‘Î‚µ‚ÄŒJ‚è•Ô‚µ
+            ' Psetå†…ã®HasPropertiesã«å¯¾ã—ã¦ç¹°ã‚Šè¿”ã—
             j = j + 1
             strPropertyType = objProperty.Type
             strPropertyName = objProperty.Attributes("Name").Value
             'r1.Offset(0, 2).Value = strPropertyType
             r1.Offset(0, j).Value = strPropertyName
             If strPropertyType Like STR_ENT_PROPERTY_SINBLEVALUE_2X Then
-              ' ƒvƒƒpƒeƒB‚ªIfcPropertySingleValue‚Ì‚Æ‚«
+              ' ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒIfcPropertySingleValueã®ã¨ã
               'r1.Offset(0, 4).Value = objProperty.Attributes("NominalValue").GetSelectType
               'r1.Offset(0, 5).Value = objProperty.Attributes("NominalValue").Value
             End If
@@ -125,8 +126,8 @@ Public Function procPsetViewerGrid()
 
 
 
-'‘®«‚Ì—ñ‹“
-  ' IfcSpace‚ÌŒJ‚è•Ô‚µ
+'å±æ€§ã®åˆ—æŒ™
+  ' IfcSpaceã®ç¹°ã‚Šè¿”ã—
   For Each objEntity In objDesign.FindObjects(strClassName)
   j = 0
     r1.Value = objEntity.Type
@@ -134,29 +135,29 @@ Public Function procPsetViewerGrid()
     r1.Offset(0, j).Value = "{" & objEntity.GUID & "}"
     'Set r1 = r1.Offset(1, 0)
     
-    ' Pset‚ÌŒJ‚è•Ô‚µ
+    ' Psetã®ç¹°ã‚Šè¿”ã—
     For Each objRelAssignsProperties In _
           objEntity.GetUsedIn(STR_ENT_REL_ASSIGNS_PROPERTIES_2X, STR_ATT_RELATED_OBJECTS_2X)
       Set objPropertySet = objRelAssignsProperties.Attributes(STR_ATT_RELATING_PROPERTY_2X).Value
       If Not objPropertySet Is Nothing Then
-        ' Pset‚ª‹ó‚Å‚È‚¢‚Æ‚«
+        ' PsetãŒç©ºã§ãªã„ã¨ã
         If objPropertySet.Type Like STR_ENT_PROPERTY_SET_2X Then
         j = j + 1
-          ' Pset‚ªIfcPropertySet‚Ì‚Æ‚«
+          ' PsetãŒIfcPropertySetã®ã¨ã
           strPropertySetName = objPropertySet.Attributes("Name").Value
           'r1.Offset(0, 1).Value = "PropertySet Name:"
           'r1.Offset(0, j).Value = strPropertySetName
           'Set r1 = r1.Offset(1, 0)
 
           For Each objProperty In objPropertySet.Attributes("HasProperties").Value
-            ' Pset“à‚ÌHasProperties‚É‘Î‚µ‚ÄŒJ‚è•Ô‚µ
+            ' Psetå†…ã®HasPropertiesã«å¯¾ã—ã¦ç¹°ã‚Šè¿”ã—
             j = j + 1
             strPropertyType = objProperty.Type
             strPropertyName = objProperty.Attributes("Name").Value
             'r1.Offset(0, 2).Value = strPropertyType
             'r1.Offset(0, j).Value = strPropertyName
             If strPropertyType Like STR_ENT_PROPERTY_SINBLEVALUE_2X Then
-              ' ƒvƒƒpƒeƒB‚ªIfcPropertySingleValue‚Ì‚Æ‚«
+              ' ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒIfcPropertySingleValueã®ã¨ã
               'r1.Offset(0, 4).Value = objProperty.Attributes("NominalValue").GetSelectType
               r1.Offset(0, j).Value = objProperty.Attributes("NominalValue").Value
             End If
